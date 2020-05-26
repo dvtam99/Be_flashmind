@@ -16,7 +16,7 @@ const setCardSchema = Schema({
   },
   empty: Boolean,
   finish: Boolean,
-  folder: [String],
+  folder: [{}],
   description: String,
   detail: [
     {
