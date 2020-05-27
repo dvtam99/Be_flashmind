@@ -58,4 +58,30 @@ const getListSetCard = async (currentUser) => {
     .exec();
   return setCard;
 };
-module.exports = { createSetCard, getListSetCard };
+
+const getSetCard = async (slug) => {
+  const setCard = await SetCard.aggregate()
+    .match({ slug: slug })
+    .limit(1)
+    .lookup({
+      from: "users",
+      localField: "author",
+      foreignField: "_id",
+      as: "author",
+    })
+    .unwind("author")
+    .project({
+      title: 1,
+      avatar: 1,
+      detail: 1,
+      finish: 1,
+      date_create: 1,
+      author: 1,
+      contentFilePath: 1,
+      slug: 1,
+    })
+    .exec();
+  return setCard[0];
+};
+
+module.exports = { createSetCard, getListSetCard, getSetCard };
