@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const { SetCard } = require("../models/setCard");
+const ERROR = require("../types/error");
 
-const createSetCard = (setCard) => {
-  const user = {
-    _id: "5ebd54d5034aef3d44d67220",
-    username: "dvtam99",
-  };
+const createSetCard = (user, setCard) => {
+  // const user = {
+  //   _id: "5ebd54d5034aef3d44d67220",
+  //   username: "dvtam99",
+  // };
   const newSetCard = new SetCard({
     title: setCard.title,
     avatar: setCard.avatar,
@@ -84,4 +85,25 @@ const getSetCard = async (slug) => {
   return setCard[0];
 };
 
-module.exports = { createSetCard, getListSetCard, getSetCard };
+const updateSetCard = async (id, setCard) => {
+  const newSetCard = await SetCard.findOneAndUpdate({ _id: id }, setCard, {
+    new: true,
+  });
+  return newSetCard;
+};
+const deleteSetCard = async (id) => {
+  const newSetCard = await SetCard.findOne({
+    _id: id,
+  });
+  if (!newSetCard) throw new Error(ERROR.SET_CARD_NOT_EXISTED);
+  await SetCard.deleteOne({ _id: id });
+  return true;
+};
+
+module.exports = {
+  createSetCard,
+  getListSetCard,
+  getSetCard,
+  deleteSetCard,
+  updateSetCard,
+};
