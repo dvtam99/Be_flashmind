@@ -3,13 +3,11 @@ const path = require("path");
 const { SetCard } = require("../models/setCard");
 const ERROR = require("../types/error");
 
-
-const createSetCard = (setCard) => {
-  const user = {
-    _id: "5ecd37b61e1e982ddcfa95c5",
-    username: "dvtam99",
-  };
-
+const createSetCard = (user, setCard) => {
+  // const user = {
+  //   _id: "5ebd54d5034aef3d44d67220",
+  //   username: "dvtam99",
+  // };
   const newSetCard = new SetCard({
     title: setCard.title,
     avatar: setCard.avatar,
@@ -23,19 +21,19 @@ const createSetCard = (setCard) => {
   });
   newSetCard.generateSlug();
   const rootFolderPath = `${path.join(__dirname, "/..")}`;
-  const cardFolderPath = `/public/set_card/${user.username}`;
+  const postFolderPath = `/public/set_card/${user.username}`;
 
-  fs.mkdirSync(rootFolderPath + cardFolderPath, { recursive: true });
+  fs.mkdirSync(rootFolderPath + postFolderPath, { recursive: true });
   fs.writeFileSync(
-    rootFolderPath + cardFolderPath + `/${newSetCard.slug}.md`,
+    rootFolderPath + postFolderPath + `/${newSetCard.slug}.md`,
     setCard.content
   );
-  newSetCard.contentFilePath = cardFolderPath + `/${newSetCard.slug}.md`;
+  newSetCard.contentFilePath = postFolderPath + `/${newSetCard.slug}.md`;
   return newSetCard.save();
 };
 
 const getListSetCard = async (currentUser) => {
-  const setCards = await SetCard.aggregate()
+  const setCard = await SetCard.aggregate()
     .limit(10)
     .sort({ createdAt: -1 })
     .lookup({
@@ -47,21 +45,17 @@ const getListSetCard = async (currentUser) => {
     .unwind("author")
     .project({
       title: 1,
-      photoUrl: 1,
-      tags: 1,
+      avatar: 1,
+      detail: 1,
+      finish: 1,
+      date_create: 1,
+      author: 1,
+      contentFilePath: 1,
       slug: 1,
-      likeCount: { $size: "$like" },
-      createdAt: 1,
-      updatedAt: 1,
-      "author._id": 1,
-      "author.username": 1,
-      "author.displayName": 1,
-      "author.photoUrl": 1,
     })
     .exec();
-  return setCards;
+  return setCard;
 };
-
 
 const getSetCard = async (slug) => {
   const setCard = await SetCard.aggregate()
@@ -110,4 +104,3 @@ module.exports = {
   deleteSetCard,
   updateSetCard,
 };
-
