@@ -1,9 +1,11 @@
 const authMdw = require("../middleware/auth");
+
 const {
   createSetCard,
   getSetCard,
   updateSetCard,
   deleteSetCard,
+  getListSetCard,
 } = require("../services/setCard");
 
 const router = require("express").Router();
@@ -12,11 +14,11 @@ router.post("/", authMdw(), (req, res) => {
   createSetCard(req.user, req.body).then((post) => res.json(post));
 });
 
-// router.get("/", authMdw({ optional: true }), (req, res) => {
-//   getListPost(req.user).then((posts) => {
-//     res.json(posts);
-//   });
-// });
+router.get("/", authMdw({ optional: true }), (req, res) => {
+  getListSetCard(req.user).then((setCards) => {
+    res.json(setCards);
+  });
+});
 
 router.get("/:slug", (req, res) => {
   const { slug } = req.params;

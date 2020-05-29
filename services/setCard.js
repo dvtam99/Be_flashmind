@@ -33,7 +33,7 @@ const createSetCard = (user, setCard) => {
 };
 
 const getListSetCard = async (currentUser) => {
-  const setCard = await Post.aggregate()
+  const setCard = await SetCard.aggregate()
     .limit(10)
     .sort({ createdAt: -1 })
     .lookup({
@@ -45,16 +45,13 @@ const getListSetCard = async (currentUser) => {
     .unwind("author")
     .project({
       title: 1,
-      photoUrl: 1,
-      tags: 1,
+      avatar: 1,
+      detail: 1,
+      finish: 1,
+      date_create: 1,
+      author: 1,
+      contentFilePath: 1,
       slug: 1,
-      likeCount: { $size: "$like" },
-      createdAt: 1,
-      updatedAt: 1,
-      "author._id": 1,
-      "author.username": 1,
-      "author.displayName": 1,
-      "author.photoUrl": 1,
     })
     .exec();
   return setCard;
