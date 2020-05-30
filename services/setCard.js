@@ -64,7 +64,7 @@ const getListSetCard = async (idUser) => {
   const setCard = await SetCard
     .aggregate()
     .limit(10)
-    .match({ author : idUser })
+    //.match({ author : idUser })
     .sort({ createdAt: -1 })
     .lookup({
       from: "users",

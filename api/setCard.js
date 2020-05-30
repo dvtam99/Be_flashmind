@@ -14,8 +14,8 @@ router.post("/", authMdw(), (req, res) => {
   createSetCard(req.user, req.body).then((setCard) => res.json(setCard));
 });
 
-router.get("/", authMdw(), (req, res) => {
-  getListSetCard(req._id).then((setCards) => {
+router.get("/", authMdw({ optional: true }), (req, res) => {
+  getListSetCard(req.body).then((setCards) => {
     res.json(setCards);
   });
 });
