@@ -4,19 +4,24 @@ const {
   getSetCard,
   updateSetCard,
   deleteSetCard,
-  getListSetCard
+  getListSetCard, 
+  searchSetCard,
 } = require("../services/setCard");
 
 const router = require("express").Router();
 
 router.post("/", authMdw(), (req, res) => {
-  createSetCard(req.user, req.body).then((post) => res.json(post));
+  createSetCard(req.user, req.body).then((setCard) => res.json(setCard));
 });
 
-router.get("/", authMdw({ optional: true }), (req, res) => {
-  getListSetCard(req.user).then((setCards) => {
+router.get("/", authMdw(), (req, res) => {
+  getListSetCard(req._id).then((setCards) => {
     res.json(setCards);
   });
+});
+
+router.post("/search", authMdw({ optional: true }), (req, res) => {
+  searchSetCard(req.body.title).then((setCards) => res.json(setCards));
 });
 
 router.get("/:slug", (req, res) => {
