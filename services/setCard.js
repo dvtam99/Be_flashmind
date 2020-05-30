@@ -32,11 +32,39 @@ const createSetCard = (user, setCard) => {
   return newSetCard.save();
 };
 
-const getListSetCard = async (currentUser) => {
-  console.log(currentUser);
-  const setCard = await SetCard.aggregate()
+const searchSetCard = async (title) => {
+  const setCard = await SetCard
+    .aggregate()
     .limit(10)
-    ///  .match({ author: currentUser })
+    .match({ title : title })
+    .sort({ createdAt: -1 })
+    .lookup({
+      from: "users",
+      localField: "author",
+      foreignField: "_id",
+      as: "author",
+    })
+    .unwind("author")
+    .project({
+      title: 1,
+      avatar: 1,
+      detail: 1,
+      finish: 1,
+      date_create: 1,
+      author: 1,
+      contentFilePath: 1,
+      slug: 1,
+    })
+    .exec();
+    return setCard;
+};
+
+
+const getListSetCard = async (idUser) => {
+  const setCard = await SetCard
+    .aggregate()
+    .limit(10)
+    //.match({ author : idUser })
     .sort({ createdAt: -1 })
     .lookup({
       from: "users",
@@ -105,4 +133,5 @@ module.exports = {
   getSetCard,
   deleteSetCard,
   updateSetCard,
+  searchSetCard
 };
