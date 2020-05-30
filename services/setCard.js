@@ -33,8 +33,10 @@ const createSetCard = (user, setCard) => {
 };
 
 const getListSetCard = async (currentUser) => {
+  console.log(currentUser);
   const setCard = await SetCard.aggregate()
     .limit(10)
+    ///  .match({ author: currentUser })
     .sort({ createdAt: -1 })
     .lookup({
       from: "users",

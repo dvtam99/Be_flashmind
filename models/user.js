@@ -15,8 +15,9 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    folder: [{ id: String, title: String }],
     bio: String,
-    photoUrl: String,    
+    photoUrl: String,
     education: String,
   },
   {

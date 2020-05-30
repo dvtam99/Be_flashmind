@@ -4,7 +4,7 @@ const {
   getSetCard,
   updateSetCard,
   deleteSetCard,
-  getListSetCard
+  getListSetCard,
 } = require("../services/setCard");
 
 const router = require("express").Router();
@@ -14,7 +14,7 @@ router.post("/", authMdw(), (req, res) => {
 });
 
 router.get("/", authMdw({ optional: true }), (req, res) => {
-  getListSetCard(req.user).then((setCards) => {
+  getListSetCard(req.body).then((setCards) => {
     res.json(setCards);
   });
 });
