@@ -1,11 +1,10 @@
 const authMdw = require("../middleware/auth");
-
 const {
   createSetCard,
   getSetCard,
   updateSetCard,
   deleteSetCard,
-  getListSetCard,
+  getListSetCard
 } = require("../services/setCard");
 
 const router = require("express").Router();
@@ -22,7 +21,7 @@ router.get("/", authMdw({ optional: true }), (req, res) => {
 
 router.get("/:slug", (req, res) => {
   const { slug } = req.params;
-  getSetCard(slug).then((post) => res.json(post));
+  getSetCard(slug).then((setCard) => res.json(setCard));
 });
 
 router.put("/", authMdw({ optional: true }), (req, res) => {
