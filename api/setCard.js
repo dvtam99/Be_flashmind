@@ -4,7 +4,7 @@ const {
   getSetCard,
   updateSetCard,
   deleteSetCard,
-  getListSetCard, 
+  getListSetCard,
   searchSetCard,
 } = require("../services/setCard");
 

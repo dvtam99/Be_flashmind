@@ -33,10 +33,9 @@ const createSetCard = (user, setCard) => {
 };
 
 const searchSetCard = async (title) => {
-  const setCard = await SetCard
-    .aggregate()
+  const setCard = await SetCard.aggregate()
     .limit(10)
-    .match({ title : title })
+    .match({ title: title })
     .sort({ createdAt: -1 })
     .lookup({
       from: "users",
@@ -45,24 +44,12 @@ const searchSetCard = async (title) => {
       as: "author",
     })
     .unwind("author")
-    .project({
-      title: 1,
-      avatar: 1,
-      detail: 1,
-      finish: 1,
-      date_create: 1,
-      author: 1,
-      contentFilePath: 1,
-      slug: 1,
-    })
     .exec();
-    return setCard;
+  return setCard;
 };
 
-
 const getListSetCard = async (idUser) => {
-  const setCard = await SetCard
-    .aggregate()
+  const setCard = await SetCard.aggregate()
     .limit(10)
     //.match({ author : idUser })
     .sort({ createdAt: -1 })
@@ -73,16 +60,6 @@ const getListSetCard = async (idUser) => {
       as: "author",
     })
     .unwind("author")
-    .project({
-      title: 1,
-      avatar: 1,
-      detail: 1,
-      finish: 1,
-      date_create: 1,
-      author: 1,
-      contentFilePath: 1,
-      slug: 1,
-    })
     .exec();
   return setCard;
 };
@@ -98,17 +75,6 @@ const getSetCard = async (slug) => {
       as: "author",
     })
     .unwind("author")
-    .project({
-      title: 1,
-      description: 1,
-      avatar: 1,
-      detail: 1,
-      finish: 1,
-      date_create: 1,
-      author: 1,
-      contentFilePath: 1,
-      slug: 1,
-    })
     .exec();
   return setCard[0];
 };
@@ -134,5 +100,5 @@ module.exports = {
   getSetCard,
   deleteSetCard,
   updateSetCard,
-  searchSetCard
+  searchSetCard,
 };
