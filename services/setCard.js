@@ -70,6 +70,7 @@ const getSetCard = async (slug) => {
     .unwind("author")
     .project({
       title: 1,
+      description: 1,
       avatar: 1,
       detail: 1,
       finish: 1,

@@ -31,7 +31,7 @@ router.put("/", authMdw({ optional: true }), (req, res) => {
   });
 });
 router.delete("/", (req, res) => {
-  const id = req.body;
+  const id = req.body._id;
   deleteSetCard(id)
     .then((setCard) => res.json({ success: true }))
     .catch((err) => res.json({ success: false, err: err.message }));
