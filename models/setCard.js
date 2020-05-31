@@ -15,6 +15,7 @@ const setCardSchema = Schema({
     required: true,
   },
   empty: Boolean,
+  publish: Boolean,
   finish: Boolean,
   folder: [{}],
   description: String,
