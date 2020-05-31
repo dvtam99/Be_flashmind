@@ -29,8 +29,7 @@ router.get("/:slug", (req, res) => {
   getSetCard(slug).then((setCard) => res.json(setCard));
 });
 
-router.put("/", authMdw({ optional: true }), (req, res) => {
-  console.log(res.body);
+router.put("/", authMdw(), (req, res) => {
   updateSetCard(req.body._id, req.body).then((newSetCard) => {
     res.json(newSetCard);
   });
