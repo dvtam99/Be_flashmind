@@ -47,13 +47,15 @@ const setCardSchema = Schema({
 });
 
 setCardSchema.methods.generateSlug = function () {
+  let id = this._id + "";
+
   this.slug =
     this.title
       .toLowerCase()
       .replace(/ /g, "-")
       .replace(/[^\w-]+/g, "") +
-    "-" +
-    this._id;
+    "_" +
+    id.slice(-6);
 };
 
 const SetCard = mongoose.model("Question", setCardSchema);
