@@ -1,10 +1,10 @@
-const router = require('express').Router();
-const { register, login, generateJWT } = require('../services/auth');
-const ERROR = require('../types/error');
+const router = require("express").Router();
+const { register, login, generateJWT } = require("../services/auth");
+const ERROR = require("../types/error");
 
-router.post('/register', (req, res) => {
-  const { username, password } = req.body;
-  register(username, password)
+router.post("/register", (req, res) => {
+  const { username, password, bio, education } = req.body;
+  register(username, password, bio, education)
     .then((result) => {
       res.json({ success: true });
     })
@@ -20,7 +20,7 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   const { username, password } = req.body;
   login(username, password)
     .then((user) => {

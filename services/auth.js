@@ -1,13 +1,15 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const { User } = require('../models/user.js');
-const ERROR = require('../types/error');
+const { User } = require("../models/user.js");
+const ERROR = require("../types/error");
 
-const register = async (username, password) => {
+const register = async (username, password, bio, education) => {
   const user = await User.findOne({ username });
   if (user) throw new Error(ERROR.USERNAME_EXISTED);
   const newUser = new User({
     username,
+    bio,
+    education,
   });
   newUser.generatePassword(password);
   return newUser.save();
