@@ -1,11 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const path = require('path');
-const morgan = require('morgan');
-const router = require('./api');
+require("dotenv").config();
+const cool = require("cool-ascii-faces");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const path = require("path");
+const morgan = require("morgan");
+const router = require("./api");
 const app = express();
 
 mongoose.connect(
@@ -16,7 +17,7 @@ mongoose.connect(
   },
   (err) => {
     if (!err) {
-      console.log('DB connected!');
+      console.log("DB connected!");
     } else {
       console.error(err);
     }
@@ -26,10 +27,10 @@ mongoose.connect(
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(morgan('common'));
+app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(morgan("common"));
 
-app.use(router);
+app.use(router).get("/cool", (req, res) => res.send(cool()));
 app.listen(process.env.PORT, () => {
-  console.log('App is running ' + process.env.PORT);
+  console.log("App is running " + process.env.PORT);
 });
