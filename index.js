@@ -17,7 +17,8 @@ const pool = new Pool({
   },
 });
 mongoose.connect(
-  `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME}`,
+  process.env.MONGO_HOST,
+  // `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME}`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
