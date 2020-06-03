@@ -7,8 +7,15 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const morgan = require("morgan");
 const router = require("./api");
+const { Pool } = require("pg");
 const app = express();
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 mongoose.connect(
   `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME}`,
   {
