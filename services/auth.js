@@ -32,4 +32,12 @@ const generateJWT = (user) => {
   return accessToken;
 };
 
-module.exports = { register, login, generateJWT };
+const generateSession = (user) => {
+  const accessToken = jwt.sign(
+    { exp: Math.floor(Date.now() / 1000) + 60 * 10, username: user.username },
+    process.env.JWT_SECRET
+  );
+  return accessToken;
+};
+
+module.exports = { register, login, generateJWT, generateSession };

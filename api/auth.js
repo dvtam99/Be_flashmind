@@ -1,5 +1,10 @@
 const router = require("express").Router();
-const { register, login, generateJWT } = require("../services/auth");
+const {
+  register,
+  login,
+  generateJWT,
+  generateSession,
+} = require("../services/auth");
 const ERROR = require("../types/error");
 
 router.post("/register", (req, res) => {
@@ -25,9 +30,11 @@ router.post("/login", (req, res) => {
   login(username, password)
     .then((user) => {
       const token = generateJWT(user);
+      const session = generateSession(user);
       res.json({
         user: user,
         token: token,
+        session: session,
       });
     })
     .catch((err) => {
